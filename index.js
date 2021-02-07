@@ -266,15 +266,17 @@ client.on('group-participants-update', async (anu) => {
 					client.sendMessage(from, teks.trim(), extendedText, {quoted: mek, contextInfo: {"mentionedJid": userpremium}})
 					break
 					case 'addprem':
+					if (!isGroup)return reply(mess.only.group)
+					if (!isOwner) return reply(mess.only.ownerB)
 					client.updatePresence(from, Presence.composing)
 					if (args.length < 1) return
-					if (!isOwner) return reply(mess.only.ownerB)
 					addpremium = `${body.slice(9)}@.whatsapp.net`
 					userpremium.push(addpremium)
 					fs.writeFileSync('./database/json/premium.json', JSON.stringify(userpremium))
 					reply(`*Berhasil Menambahkan ${addpremium} Ke database User Premium*`)
 					break
 				case 'removeprem':
+				    if (!isGroup)return reply(mess.only.group)
 					if (!isOwner) return reply(mess.only.ownerB)
 					rprem = body.slice(13)
 					userpremium.splice(`${rprem}@s.whatsapp.net`, 1)
